@@ -8,7 +8,7 @@ function App() {
 
   React.useEffect(() => {
     fetch(
-      "./direct-pull-taxmaps.kmz"
+      "./direct-pull-taxmaps.kml"
     )
       .then((res) => res.text())
       .then((kmlText) => {
