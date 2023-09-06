@@ -2,13 +2,12 @@ import * as React from "react";
 import { createRoot } from "react-dom/client";
 import { MapContainer, TileLayer } from "react-leaflet";
 import ReactLeafletKml from "react-leaflet-kml";
-import kmlUrl from './direct-pull-taxmaps.kml'
 
 function App() {
   const [kml, setKml] = React.useState(null);
 
   React.useEffect(() => {
-    fetch(kmlUrl)
+    fetch('./direct-pull-taxmaps.kml')
       .then((res) => res.text())
       .then((kmlText) => {
         const parser = new DOMParser();
