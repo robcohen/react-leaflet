@@ -4,7 +4,7 @@ This app provides map of precincts, super precincts and relevant contact informa
 
 ## TODO
 
-- Automatically pull precinct maps from Traviscad
+- Automatically pull precinct maps from Traviscad - THIS BRANCH
 - Fill precincts/super precincts with relevant contact information, easily viewable
 - Address search
 - Colorize superprecincts automatically
