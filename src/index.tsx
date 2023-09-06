@@ -8,7 +8,7 @@ function App() {
 
   React.useEffect(() => {
     fetch(
-      "https://raw.githubusercontent.com/robcohen/react-leaflet/main/direct-pull-taxmaps.kml"
+      "https://github.com/robcohen/react-leaflet/raw/kml-pull/direct-pull-taxmaps.kml"
     )
       .then((res) => res.text())
       .then((kmlText) => {
