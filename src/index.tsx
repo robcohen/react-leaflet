@@ -8,7 +8,7 @@ function App() {
 
   React.useEffect(() => {
     fetch(
-      "./direct-pull-taxmaps.kml"
+      "./traviscounty-precincts.kml"
     )
       .then((res) => res.text())
       .then((kmlText) => {
