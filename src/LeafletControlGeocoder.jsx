@@ -24,8 +24,9 @@ export default function LeafletControlGeocoder() {
 
     L.Control.geocoder({
       query: "",
-      placeholder: "Search here...",
+      placeholder: "Find the precinct of your address...",
       defaultMarkGeocode: false,
+      collapsed: false,
       geocoder
     })
       .on("markgeocode", function (e) {

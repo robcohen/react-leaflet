@@ -1,30 +1,13 @@
 import React from 'react';
-import {useEffect} from 'react';
 import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet'
 import geoJSON from '../static/geo.json';
-import { OpenStreetMapProvider, GeoSearchControl } from 'leaflet-geosearch'
 import "leaflet/dist/leaflet.css";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
-
-
-// interface CustomGeoJSON {
-//   type: 'FeatureCollection';
-//   features: {
-//     type: 'Feature';
-//     geometry: {
-//       type: 'Polygon'; // Adjust the geometry type if needed
-//       coordinates: number[][][]; // Adjust the coordinate structure for polygons
-//     };
-//     properties: {
-//       [key: string]: any; // Adjust properties as needed
-//     };
-//   }[];
 
 const geoJSONData = geoJSON;
 
 export default function PrecinctMap() {
 
-    
     const onEachFeature = (feature, layer) => {
         if (feature.properties && feature.properties.Precinct) {
             const popupContent = feature.properties.Precinct;
@@ -37,7 +20,7 @@ export default function PrecinctMap() {
             <MapContainer
             center={[30.267, -97.743]}
             zoom={10}
-            style={{ width: '50vw', height: '60vh', marginLeft:'25vw'}}
+            style={{ width: '90vw', height: '90vh'}}
             className="map"
             >
             <TileLayer
@@ -48,7 +31,9 @@ export default function PrecinctMap() {
               data={geoJSONData}
               onEachFeature={onEachFeature}
             />
-            <LeafletControlGeocoder />
+            <LeafletControlGeocoder
+              collapsed={false}
+            />
           </MapContainer>
         </div>
     );
