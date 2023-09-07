@@ -2,11 +2,8 @@
 
 This app provides map of precincts, super precincts and relevant contact information for the Travis County Democratic Party.
 
-## TODO
+## Development
 
-- Automatically pull precinct maps from Traviscad - THIS BRANCH
-- Fill precincts/super precincts with relevant contact information, easily viewable
-- Address search
-- Colorize superprecincts automatically
+To develop locally, run:
 
-These features will be added via branches and merged into main once completed.
+`yarn build` in one terminal, and `yarn serve` in another.
