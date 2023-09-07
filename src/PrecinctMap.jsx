@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, GeoJSON, Popup } from 'react-leaflet'
 import geoJSON from '../static/geo.json';
 import "leaflet/dist/leaflet.css";
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
-
+var airtableKey   = process.env.AIRTABLE_KEY;
 const geoJSONData = geoJSON;
 
 export default function PrecinctMap() {
