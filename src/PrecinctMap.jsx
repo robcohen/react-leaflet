@@ -6,16 +6,13 @@ import "leaflet/dist/leaflet.css";
 import { getPrecinctData } from './PrecinctTable';
  
 export default function PrecinctMap() { 
-  const geoJSONData = geoJSON;
   const precinctData = getPrecinctData();
-
-  
     return (
         <div>
-            <MapContainer
+            {precinctData && <MapContainer
             center={[30.267, -97.743]}
             zoom={10}
-            style={{ width: '90vw', height: '90vh'}}
+            style={{ width: '100vw', height: '100vh'}}
             className="map"
             >
             <TileLayer
@@ -23,19 +20,29 @@ export default function PrecinctMap() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <GeoJSON
-              data={geoJSONData}
+              data={geoJSON}
               onEachFeature={(feature, layer) => {
                 if (feature.properties && feature.properties.Precinct) {
-                  const popupContent = feature.properties.Precinct;
-                  layer.bindPopup(`Value: ${feature.properties.Precinct}`);
-                  console.log(precinctData);
+                  const precRec = precinctData.find(record => record.fields['Precinct Number'].toString() === feature.properties.Precinct);
+                  if (precRec.fields['Precinct Chair'] !== undefined) {
+                    layer.bindPopup(
+                    `<p><b>Precinct #:</b> ${precRec.fields['Precinct Number']}</p>
+                     <p><b>Precinct Chair:</b> ${precRec.fields['Precinct Chair']}</p>
+                     <p><b>Email:</b> <a href="mailto:${precRec.fields['Precinct Email']}">${precRec.fields['Precinct Email']}</a></p>`
+                     );
+                  } else {
+                  layer.bindPopup(
+                    `<p><b>Precinct #:</b> ${precRec.fields['Precinct Number']}</p>
+                     <p><b>Precinct Chair:</b> No Precinct Chair</p>`
+                     );
+                  }
                 }
               }}
             />
             <LeafletControlGeocoder
               collapsed={false}
             />
-          </MapContainer>
+          </MapContainer>}
         </div>
     );
 }

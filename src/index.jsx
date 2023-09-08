@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import PrecinctMap from './PrecinctMap'
 
 function App() {
-  return (
+  return ( 
     <React.StrictMode>
         <PrecinctMap />
     </React.StrictMode>
