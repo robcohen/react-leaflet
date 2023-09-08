@@ -6,3 +6,4 @@ package-lock.json
 .devcontainer
 .pnp.cjs
 .pnp.loader.mjs
+.env
