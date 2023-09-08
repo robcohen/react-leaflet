@@ -1,26 +1,15 @@
 import React, { useEffect, useState} from 'react';
-import Airtable from 'airtable'
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import geoJSON from '../static/geo.json';
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 import "leaflet/dist/leaflet.css";
+import { getPrecinctData } from './PrecinctTable';
  
 export default function PrecinctMap() { 
-  const [precinctData, setData] = useState();
   const geoJSONData = geoJSON;
+  const precinctData = getPrecinctData();
 
-
-    useEffect(() => {
-        async function GetAirtableRecords() {
-          const base = new Airtable({apiKey: import.meta.env.VITE_AIRTABLE_KEY}).base(import.meta.env.VITE_AIRTABLE_BASE);
-          const save = await base(import.meta.env.VITE_AIRTABLE_TABLE).select().all();
-          return save;
-        }
-        GetAirtableRecords()
-        .then(res => setData(res))
-      }, []
-    ) 
-
+  
     return (
         <div>
             <MapContainer
@@ -38,7 +27,8 @@ export default function PrecinctMap() {
               onEachFeature={(feature, layer) => {
                 if (feature.properties && feature.properties.Precinct) {
                   const popupContent = feature.properties.Precinct;
-                  layer.bindPopup(`Value: ${precinctData}`);
+                  layer.bindPopup(`Value: ${feature.properties.Precinct}`);
+                  console.log(precinctData);
                 }
               }}
             />
