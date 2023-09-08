@@ -1,31 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
+import Airtable from 'airtable'
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import geoJSON from '../static/geo.json';
-import "leaflet/dist/leaflet.css";
-import Airtable from 'airtable'
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
+import "leaflet/dist/leaflet.css";
+ 
+export default function PrecinctMap() { 
+  const [precinctData, setData] = useState();
+  const geoJSONData = geoJSON;
 
-const geoJSONData = geoJSON;
 
-export default function PrecinctMap() {
-    async function GetAirtableRecords() {
-      const base = new Airtable({apiKey: import.meta.env.VITE_AIRTABLE_KEY}).base(import.meta.env.VITE_AIRTABLE_BASE);
-      console.log(base);
-      const records = await base(import.meta.env.VITE_AIRTABLE_TABLE).select().all();
-      console.log(records);
-      return records;
-    }
-
-    const records = GetAirtableRecords()
-      .then((res)=>console.log("DONE: ", res))
-      .catch((err)=>{console.log("ERR: ", err)});
-
-    const onEachFeature = (feature, layer) => {
-        if (feature.properties && feature.properties.Precinct) {
-            const popupContent = feature.properties.Precinct;
-            layer.bindPopup(`Value: ${popupContent}`);
-          }
-    }
+    useEffect(() => {
+        async function GetAirtableRecords() {
+          const base = new Airtable({apiKey: import.meta.env.VITE_AIRTABLE_KEY}).base(import.meta.env.VITE_AIRTABLE_BASE);
+          const save = await base(import.meta.env.VITE_AIRTABLE_TABLE).select().all();
+          return save;
+        }
+        GetAirtableRecords()
+        .then(res => setData(res))
+      }, []
+    ) 
 
     return (
         <div>
@@ -41,7 +35,12 @@ export default function PrecinctMap() {
             />
             <GeoJSON
               data={geoJSONData}
-              onEachFeature={onEachFeature}
+              onEachFeature={(feature, layer) => {
+                if (feature.properties && feature.properties.Precinct) {
+                  const popupContent = feature.properties.Precinct;
+                  layer.bindPopup(`Value: ${precinctData}`);
+                }
+              }}
             />
             <LeafletControlGeocoder
               collapsed={false}
