@@ -4,25 +4,21 @@ import geoJSON from '../static/geo.json';
 import "leaflet/dist/leaflet.css";
 import Airtable from 'airtable'
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
-import env from "react-dotenv";
+
 const geoJSONData = geoJSON;
-console.log(env.AIRTABLE_KEY);
-console.log(env.AIRTABLE_BASE);
-console.log(env.AIRTABLE_TABLE);
 
 export default function PrecinctMap() {
     async function GetAirtableRecords() {
-      const base = new Airtable({apiKey: env.AIRTABLE_KEY}).base(env.AIRTABLE_BASE);
-      const records = await base(env.AIRTABLE_TABLE).select().all();
-
+      const base = new Airtable({apiKey: import.meta.env.VITE_AIRTABLE_KEY}).base(import.meta.env.VITE_AIRTABLE_BASE);
+      console.log(base);
+      const records = await base(import.meta.env.VITE_AIRTABLE_TABLE).select().all();
+      console.log(records);
       return records;
     }
 
     const records = GetAirtableRecords()
       .then((res)=>console.log("DONE: ", res))
       .catch((err)=>{console.log("ERR: ", err)});
-
-
 
     const onEachFeature = (feature, layer) => {
         if (feature.properties && feature.properties.Precinct) {
